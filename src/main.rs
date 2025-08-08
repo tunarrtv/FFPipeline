@@ -1,4 +1,5 @@
 mod model;
+mod output_format;
 
 use clap::Parser;
 
