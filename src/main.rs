@@ -2,6 +2,7 @@ mod model;
 mod output_format;
 
 use clap::Parser;
+use crate::model::{StaticPixelFormat, Yuv420P};
 
 #[derive(Parser)]
 struct Args {
@@ -11,5 +12,10 @@ struct Args {
 
 fn main() {
     let cli = Args::parse();
-    println!("Hello, world! {}, {}", cli.verbose, *model::HIDE_BANNER_OPTION)
+    let pix = StaticPixelFormat {
+        name: "".to_string(),
+        ffmpeg_name: "".to_string(),
+        bit_depth: 0,
+    };
+    println!("Hello, world! {}, {}", cli.verbose, *Yuv420P)
 }
