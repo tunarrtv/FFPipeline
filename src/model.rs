@@ -1,6 +1,10 @@
 pub(crate) mod pipeline_step;
 mod global_option;
 mod pix_fmt;
+mod input_file;
+mod media_stream;
+mod input_option;
+mod stream_source;
 
 pub use global_option::*;
 pub use pix_fmt::*;
@@ -16,6 +20,16 @@ pub enum FrameDataLocation {
     Unknown,
     Software,
     Hardware,
+}
+
+#[derive(PartialOrd, PartialEq)]
+pub enum HardwareAccelerationMode {
+    None,
+    Qsv,
+    Cuda,
+    Vaapi,
+    VideoToolbox,
+    Amf,
 }
 
 #[derive(Debug)]

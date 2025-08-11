@@ -11,8 +11,8 @@ impl<'a> pipeline_step::PipelineStep<'a> for GlobalOption {
         pipeline_step::StepType::Global
     }
 
-    fn get_options(&'a self) -> impl Iterator<Item=&'a str> {
-        self.opts.iter().map(|s| s.as_str())
+    fn get_options(&'a self) -> &'a [String] {
+        &self.opts
     }
 }
 

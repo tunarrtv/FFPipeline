@@ -1,8 +1,9 @@
 mod model;
 mod output_format;
+mod capabilities;
 
 use clap::Parser;
-use crate::model::{StaticPixelFormat, Yuv420P};
+use crate::model::{StaticPixelFormat, YUV420P};
 
 #[derive(Parser)]
 struct Args {
@@ -17,5 +18,5 @@ fn main() {
         ffmpeg_name: "".to_string(),
         bit_depth: 0,
     };
-    println!("Hello, world! {}, {}", cli.verbose, *Yuv420P)
+    println!("Hello, world! {}, {}", cli.verbose, *YUV420P)
 }
