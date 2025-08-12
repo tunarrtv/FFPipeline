@@ -4,7 +4,9 @@ pub enum StepType {
     Output,
 }
 
-pub trait PipelineStep<'a> {
+pub trait PipelineStep {
     fn get_type(&self) -> StepType;
-    fn get_options(&'a self) -> &'a [String];
+    
+    // Caller takes ownership of the returned vector
+    fn get_options(&self) -> Vec<String>;
 }

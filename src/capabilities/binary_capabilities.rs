@@ -1,7 +1,7 @@
 use std::collections::HashSet;
 use crate::model::HardwareAccelerationMode;
 
-struct BinaryCapabilities {
+pub struct BinaryCapabilities {
     hardware_accelerations: HashSet<String>,
     encoders: HashSet<String>,
     decoder: HashSet<String>,
@@ -27,5 +27,9 @@ impl BinaryCapabilities {
             None => false,
             Some(v) => self.hardware_accelerations.contains(v)
         }
+    }
+
+    pub fn has_option(&self, option: &str) -> bool {
+        self.options.contains(option)
     }
 }

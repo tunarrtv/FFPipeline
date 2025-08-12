@@ -1,27 +1,44 @@
+use crate::capabilities;
 use crate::model::input_file::InputFile;
-use crate::model::{pipeline_step, GlobalOption};
-use crate::model::pipeline_step::PipelineStep;
+use crate::model::pipeline_step;
+use crate::model::pipeline_step::StepType;
 
 pub trait InputOption {
     fn applies_to(&self, input: &InputFile) -> bool;
 }
 
-pub struct ReadrateInputOption {
-    initial_burst_seconds: u16
+pub struct ReadrateInputOption<'a> {
+    initial_burst_seconds: u16,
+    binary_capabilities: &'a capabilities::BinaryCapabilities,
 }
 
-impl InputOption for ReadrateInputOption {
+impl<'a> InputOption for ReadrateInputOption<'a> {
     fn applies_to(&self, input: &InputFile) -> bool {
         match input {
             InputFile::Video(_) => true,
-            InputFile::Concat(_) => true
+            InputFile::Concat(_) => true,
         }
     }
 }
 
-impl<'a> pipeline_step::PipelineStep<'a> for ReadrateInputOption {
-    fn get_options(&'a self) -> impl Iterator<Item=&'a str> {
+impl<'a> pipeline_step::PipelineStep for ReadrateInputOption<'a> {
+    fn get_type(&self) -> StepType {
+        StepType::Input
+    }
 
+    fn get_options(&self) -> Vec<String> {
+        let mut result = vec!["-readrate".to_string(), "1.0".to_string()];
+        if self.initial_burst_seconds > 0
+            && self.binary_capabilities.has_option("initial_burst_seconds")
+        {
+            result.extend(
+                [
+                    "-initial_burst_seconds".to_string(),
+                    self.initial_burst_seconds.to_string(),
+                ]
+            );
+        }
 
+        result
     }
 }
